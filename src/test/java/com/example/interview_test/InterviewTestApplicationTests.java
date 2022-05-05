@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +26,9 @@ class InterviewTestApplicationTests {
 	
 	@Autowired
 	CoinRepository coinRepository;
+	
+	@Autowired
+	RestTemplate restTemplate;
 
 //	@Test
 //	void testAddAllCoin() {
@@ -33,7 +38,7 @@ class InterviewTestApplicationTests {
 	//依幣別查詢對應的資料
 	@Test
 	void testGetCoinByName() {
-		Coin coin=coinRepository.findByCoinName("USD");
+		Optional<Coin> coin=coinRepository.findById("USD");
 		assertNotNull(coin);
 		
 		System.out.println("依幣別(USD)查詢對應的資料");
@@ -56,18 +61,18 @@ class InterviewTestApplicationTests {
 	//更新幣別資料
 	@Test
 	void testUpdateCoin() {
-		Coin coin=coinRepository.findByCoinName("USD");
+		Optional<Coin> coin=coinRepository.findById("USD");
 		System.out.println("幣別(USD)資料更新前");
 		System.out.println(coin.toString());
-		coin.setChineseName("美元");
-		coinRepository.save(coin);
+		coin.get().setChineseName("美元");
+		coinRepository.save(coin.get());
 		
 		System.out.println("幣別(USD)資料更新後");
-		System.out.println(coin.toString());
+		System.out.println(coin.get().toString());
 		
 		System.out.println("----------------------------------------------------");
 		
-		assertEquals("美元",coinRepository.findByCoinName("USD").getChineseName());
+		assertEquals("美元",coinRepository.findById("USD").get().getChineseName());
 	}
 
 	//刪除幣別資料
@@ -94,7 +99,6 @@ class InterviewTestApplicationTests {
 	@Test
 	void testCoinDeskAPI() {
 		String url="https://api.coindesk.com/v1/bpi/currentprice.json";
-		RestTemplate restTemplate=new RestTemplate();
 		String coindesk=restTemplate.getForObject(url, String.class);
 		
 		assertNotNull(coindesk);

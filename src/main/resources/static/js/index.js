@@ -221,7 +221,7 @@ function transform_coin(){
 		$('#update_time').html('更新時間')
 		$('#coindeskAPI2').html('')
 	
-		$('#update_time').text($('#update_time').text()+':'+dateTime).show()
+		$('#update_time').text($('#update_time').text()+':'+dateTime)
 	
 		let transformAPI='/api/v1/transform/coin'
 		

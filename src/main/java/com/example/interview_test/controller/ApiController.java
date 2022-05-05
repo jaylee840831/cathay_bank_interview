@@ -55,9 +55,9 @@ public class ApiController {
 	
 	//修改資料
 	@PutMapping("/put/coin/{previous_name}")
-	public ResponseEntity<Coin> updateCoin(@RequestBody Coin c,@PathVariable("previous_name") String previous_name){
+	public ResponseEntity<Object> updateCoin(@RequestBody Coin c,@PathVariable("previous_name") String previous_name){
 		coinService.updateCoin(c, previous_name);
-		return new ResponseEntity<Coin>(coinService.getCoin(c.getCoinName()), HttpStatus.OK);
+		return new ResponseEntity<Object>(coinService.getCoin(c.getCoinName()), HttpStatus.OK);
 	}
 	
 	//刪除資料

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>home page</title>
@@ -14,12 +14,27 @@
 <div id="coindeskAPI"></div>
 <p/>
 <h2>coindesk api 資料轉換</h2>
-<button id="transform_coindesk" class="btn btn-info" style="color:white;">轉換</button>
+<button id="transform_coindesk" class="btn btn-info" style="color:white;">刷新</button>
 <div id="coindesk">
 	<p/>
-	<h6 id="update_time" style="display:none"></h6>
+	<h6 id="update_time" >更新時間</h6>
 	<span>
-		<table id="coindeskAPI2"></table>
+		<table id="coindeskAPI2" >
+			<thead>
+				<tr>
+					<th>幣名</th>
+					<th>中文幣名</th>
+					<th>匯率</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="coin:${coins}">
+					<td th:text="${coin.coinName}"></td>
+					<td th:text="${coin.chineseName}"></td>
+					<td th:text="${coin.rate}"></td>
+				</tr>
+			</tbody>
+		</table>
 	</span>
 	</p>
 	<span>

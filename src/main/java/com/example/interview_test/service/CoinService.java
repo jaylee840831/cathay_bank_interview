@@ -1,6 +1,7 @@
 package com.example.interview_test.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +16,15 @@ public class CoinService {
 	CoinRepository coinRepository;
 	
 	public List<Coin>getAllCoin(){
-		return coinRepository.getAllCoin();
+		return coinRepository.findAll();
 	}
 	
-	public Coin getCoin(String name){
-		return coinRepository.findByCoinName(name);
+	public Optional<Coin> getCoin(String name){
+		return coinRepository.findById(name);
 	}
 	
 	public void updateCoin(Coin coin,String name){
-		coinRepository.updateCoin(name,coin.getCoinName(),coin.getChineseName(),coin.getRate());
+		coinRepository.save(coin);
 	}
 
 	public void saveCoin(Coin coin) {
@@ -35,6 +36,6 @@ public class CoinService {
 	}
 	
 	public void deleteCoin(String name) {
-		coinRepository.deleteByCoinName(name);
+		coinRepository.deleteById(name);
 	}
 }
